@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:math';
+
+import 'package:sih/views/quiz_category.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SIH Demo',
-      home: const HomePage(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Quiz Categories"),
+          backgroundColor: Colors.brown.shade700.withOpacity(0.8),
+          centerTitle: true,
+          elevation: 0,
+        ),
+        body: const QuizCategory(), // QuizCategory only builds the body
+      ),
     );
   }
 }
@@ -114,6 +123,7 @@ class StormScenarioWidget extends StatefulWidget {
 class _StormScenarioWidgetState extends State<StormScenarioWidget> {
   String? selectedOption;
   bool showLightning = false;
+
   final List<String> options = [
     "Move Valuables Upstairs",
     "Supply Run",
@@ -125,10 +135,8 @@ class _StormScenarioWidgetState extends State<StormScenarioWidget> {
   @override
   void initState() {
     super.initState();
-    _startLightning();
-  }
 
-  void _startLightning() {
+    // Lightning effect every 3 seconds
     Timer.periodic(const Duration(seconds: 3), (timer) {
       setState(() {
         showLightning = true;
@@ -146,13 +154,18 @@ class _StormScenarioWidgetState extends State<StormScenarioWidget> {
     return Scaffold(
       appBar: AppBar(title: const Text("Flood Drill Scenario")),
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            // Dark stormy sky
-            Container(color: Colors.blueGrey.shade900),
-
-            // Rain drops
-            Positioned.fill(child: CustomPaint(painter: RainPainter())),
+            // Top image
+            Align(
+              alignment: Alignment.topCenter,
+              child: Image.asset(
+                'assets/images/flood_bg.jpg',
+                width: double.infinity,
+                height: 400,
+                fit: BoxFit.cover,
+              ),
+            ),
 
             // Lightning overlay
             if (showLightning)
@@ -160,18 +173,7 @@ class _StormScenarioWidgetState extends State<StormScenarioWidget> {
                 child: Container(color: Colors.white.withOpacity(0.6)),
               ),
 
-            // House in center
-            Align(
-              alignment: Alignment.topCenter,
-              child: Image.asset(
-                'assets/flood_bg.jpg',
-                width: double.infinity,
-                height: 400,
-                fit: BoxFit.cover,
-              ),
-            ),
-
-            // Options at bottom
+            // Bottom options
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -180,9 +182,7 @@ class _StormScenarioWidgetState extends State<StormScenarioWidget> {
                 color: const Color.fromARGB(122, 255, 255, 255),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight:
-                        MediaQuery.of(context).size.height *
-                        0.5, // max height of the options panel
+                    maxHeight: MediaQuery.of(context).size.height * 0.5,
                   ),
                   child: SingleChildScrollView(
                     child: Column(
@@ -199,14 +199,14 @@ class _StormScenarioWidgetState extends State<StormScenarioWidget> {
                                 });
                               },
                               child: Container(
-                                width: double.infinity, // full width
+                                width: double.infinity,
                                 decoration: BoxDecoration(
                                   color: isSelected
                                       ? Colors.purple
                                       : Colors.white,
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
-                                    color: Colors.grey, // small border line
+                                    color: Colors.grey,
                                     width: 1,
                                   ),
                                 ),
@@ -230,8 +230,7 @@ class _StormScenarioWidgetState extends State<StormScenarioWidget> {
                         }),
                         const SizedBox(height: 12),
                         SizedBox(
-                          width:
-                              double.infinity, // make submit button full width
+                          width: double.infinity,
                           child: ElevatedButton(
                             onPressed: selectedOption == null
                                 ? null
@@ -258,22 +257,4 @@ class _StormScenarioWidgetState extends State<StormScenarioWidget> {
       ),
     );
   }
-}
-
-// Simple raindrop painter
-class RainPainter extends CustomPainter {
-  final Random random = Random();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.blueAccent;
-    for (int i = 0; i < 150; i++) {
-      double x = random.nextDouble() * size.width;
-      double y = random.nextDouble() * size.height;
-      canvas.drawLine(Offset(x, y), Offset(x, y + 10), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
