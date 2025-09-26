@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sih/utils/myAppBar.dart';
 import 'dart:async';
-
 import 'package:sih/views/quiz_category.dart';
+import 'package:sih/utils/glassmorph.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,15 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SIH Demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Quiz Categories"),
-          backgroundColor: Colors.brown.shade700.withOpacity(0.8),
-          centerTitle: true,
-          elevation: 0,
-        ),
-        body: const QuizCategory(), // QuizCategory only builds the body
-      ),
+      home: Scaffold(body: const HomePage()),
     );
   }
 }
@@ -34,80 +27,43 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('Virtual drills'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const VirtualDrillsPage(),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
+      appBar: myAppBar("Home page"),
+      // Stack to allow background + glass overlay
+      body: Stack(
+        children: [
+          // Full-screen glassmorphism overlay
+          const GlassMorphism(start: 0.25, end: 0.1, child: SizedBox.expand()),
 
-class VirtualDrillsPage extends StatelessWidget {
-  const VirtualDrillsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Virtual Drills')),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('Flood'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const FloodPage()),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class FloodPage extends StatelessWidget {
-  const FloodPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Flood')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
+          // Centered content
+          Center(
+            child: GestureDetector(
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const StormScenarioWidget(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const QuizCategory()),
                 );
               },
-              child: const Text('Pre Disaster'),
+              child: GlassMorphism(
+                start: 0.35,
+                end: 0.15,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 40,
+                  ),
+                  child: const Text(
+                    'Virtual Drills',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('During Disaster'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('Post Disaster'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

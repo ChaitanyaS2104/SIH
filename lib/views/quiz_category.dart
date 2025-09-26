@@ -1,14 +1,9 @@
 // Main page with all disasters
 
 import 'package:flutter/material.dart';
+import 'package:sih/utils/myAppBar.dart';
 import 'package:sih/views/quiz_details.dart';
 import 'package:sih/utils/glassmorph.dart';
-
-void main() {
-  runApp(
-    const MaterialApp(debugShowCheckedModeBanner: false, home: QuizCategory()),
-  );
-}
 
 class QuizCategory extends StatelessWidget {
   const QuizCategory({super.key});
@@ -45,6 +40,7 @@ class QuizCategory extends StatelessWidget {
     ];
 
     return Scaffold(
+      appBar: myAppBar("Quiz page"),
       body: Stack(
         children: [
           // Full-screen brown glass overlay

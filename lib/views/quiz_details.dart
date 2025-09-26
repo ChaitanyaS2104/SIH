@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sih/utils/glassmorph.dart';
 import 'package:sih/views/scenario_quiz_page.dart';
+import 'package:sih/utils/myAppBar.dart';
 
 class QuizDetailPage extends StatelessWidget {
   final String title;
@@ -13,11 +14,7 @@ class QuizDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        backgroundColor: Colors.brown.shade700.withOpacity(0.8),
-        centerTitle: true,
-      ),
+      appBar: myAppBar("Quiz details"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -50,7 +47,7 @@ class QuizDetailPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              ScenarioQuizPage(title: "$title - Pre-Disaster"),
+                              ScenarioQuizPage(title: "$title - Pre-disaster"),
                         ),
                       );
                     },
@@ -133,5 +130,3 @@ class QuizDetailPage extends StatelessWidget {
     );
   }
 }
-
-

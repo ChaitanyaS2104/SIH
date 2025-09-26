@@ -13,6 +13,7 @@ dependencies:
   just_audio: ^0.9.42 
   get: ^4.7.2
   flutter_svg: ^2.2.1
+  lottie: ^3.3.2
 
 dev_dependencies:
   flutter_test:
@@ -22,9 +23,30 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/images/flood_bg.jpg
     - assets/images/flood.png
     - assets/images/earthquake.png
     - assets/images/cyclone.png
     - assets/images/flame.png
     - assets/images/landslide.png
-
+    - assets/lottie/RedCar.json
+    - assets/lottie/Isometricshop.json
+    - assets/lottie/stairs.json
+    - assets/lottie/ac.json
+    - assets/lottie/pc.json
+    - assets/lottie/wm.json
+    - assets/lottie/car_safety.json
+    - assets/lottie/document.json
+    - assets/lottie/passport.json
+    - assets/lottie/bag.json
+    - assets/lottie/medicine.json
+    - assets/lottie/call.json
+    - assets/lottie/social_media.json
+    - assets/lottie/social_bubble.json
+    - assets/lottie/stairs.json
+    - assets/lottie/rooftop.json
+    - assets/lottie/power_line.json
+    - assets/lottie/off.json
+    - assets/lottie/family.json
+    - assets/lottie/charging.json
+    - assets/lottie/alert.json
